@@ -95,7 +95,7 @@ RSpec.describe Carnival do
 
     it 'has a draw lottery winner' do
 
-      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq(bob)||(johnny)
+      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq(bob).or eq(johnny)
       expect(jeffco_fair.draw_lottery_winner(ferris_wheel)).to eq(nil)
       expect(jeffco_fair.draw_lottery_winner(scrambler)).to eq(nil)
     end
@@ -109,9 +109,5 @@ RSpec.describe Carnival do
   end
 end
 
-# - `ticket_lottery_contestants` returns an array of attendees that do not have
-#   enough money to go on a particular ride, but are interested in that ride.
-#   The lottery winner is generated randomly based on the available contestants
-#  when `draw_lottery_winner` is called.
 # - You will need to use a **stub** to test the `announce_lottery_winner`
 # method in conjunction with the `draw_lottery_winner` method. JOY!
