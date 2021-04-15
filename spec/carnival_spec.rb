@@ -13,6 +13,7 @@ RSpec.describe Carnival do
     it 'has attributes' do
       expect(jeffco_fair.name).to eq('Jefferson County Fair')
       expect(jeffco_fair.rides).to eq([])
+      expect(jeffco_fair.attendees).to eq([])
     end
   end
 
@@ -40,19 +41,79 @@ RSpec.describe Carnival do
     bob = Attendee.new('Bob', 20)
     sally = Attendee.new('Sally', 20)
 
-      it 'has recommended rides' do
-        jeffco_fair.add_ride(ferris_wheel)
-        jeffco_fair.add_ride(bumper_cars)
-        jeffco_fair.add_ride(scrambler)
-        bob.add_interest('Ferris Wheel')
-        bob.add_interest('Bumper Cars')
-        sally.add_interest('Scrambler')
+    it 'has recommended rides' do
+      jeffco_fair.add_ride(ferris_wheel)
+      jeffco_fair.add_ride(bumper_cars)
+      jeffco_fair.add_ride(scrambler)
+      bob.add_interest('Ferris Wheel')
+      bob.add_interest('Bumper Cars')
+      sally.add_interest('Scrambler')
 
-        expected_b = [ferris_wheel, bumper_cars]
-        expected_s = [scrambler]
-        expect(jeffco_fair.recommend_rides(bob)).to eq(expected_b)
-        expect(jeffco_fair.recommend_rides(sally)).to eq(expected_s)
+      expected_b = [ferris_wheel, bumper_cars]
+      expected_s = [scrambler]
+      expect(jeffco_fair.recommend_rides(bob)).to eq(expected_b)
+      expect(jeffco_fair.recommend_rides(sally)).to eq(expected_s)
+    end
+  end
 
+  context 'interested attendees' do
+    jeffco_fair = Carnival.new("Jefferson County Fair")
+    ferris_wheel = Ride.new({name: 'Ferris Wheel', cost: 0})
+    bumper_cars = Ride.new({name: 'Bumper Cars', cost: 10})
+    scrambler = Ride.new({name: 'Scrambler', cost: 15})
+    jeffco_fair.add_ride(ferris_wheel)
+    jeffco_fair.add_ride(bumper_cars)
+    jeffco_fair.add_ride(scrambler)
+    jeffco_fair.attendees
+    bob = Attendee.new("Bob", 0)
+    bob.add_interest('Ferris Wheel')
+    bob.add_interest('Bumper Cars')
+    sally = Attendee.new('Sally', 20)
+    sally.add_interest('Bumper Cars')
+    johnny = Attendee.new("Johnny", 5)
+    johnny.add_interest('Bumper Cars')
+
+    it 'can admit attendees' do
+      jeffco_fair.admit(bob)
+      jeffco_fair.admit(sally)
+      jeffco_fair.admit(johnny)
+
+      expect(jeffco_fair.attendees).to eq([bob, sally, johnny])
+    end
+
+    it 'has attendees by ride interest' do
+      expected = {bumper_cars=> [bob, sally, johnny], ferris_wheel=>[bob], scrambler=>[]}
+      expect(jeffco_fair.attendees_by_ride_interest).to eq(expected)
+    end
+
+    xit 'has ticket lottery contestants' do
+
+      expect(jeffco_fair.ticket_lottery_contestants(bumper_cars)).to eq()
+      expect(jeffco_fair.ticket_lottery_contestants(ferris_wheel)).to eq()
+      expect(jeffco_fair.ticket_lottery_contestants(scrambler)).to eq()
+    end
+    xit 'has a draw lottery winner' do
+
+      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq()
+      expect(jeffco_fair.draw_lottery_winner(ferris_wheel)).to_eq(nil)
+      expect(jeffco_fair.draw_lottery_winner(scrambler)).to_eq()
+    end
+
+    xit 'has a announce lottery winner' do
+
+      expect(jeffco_fair.announce_lottery_winner(bumper_cars)).to eq("has won the bumper car lottery")
+      expect(jeffco_fair.announce_lottery_winner(ferris_wheel)).to eq("No winners for this lottery")
+      expect(jeffco_fair.announce_lottery_winner(scrambler)).to eq("Bob has won the IMAX exhibit")
     end
   end
 end
+
+# - For `attendees_by_ride_interest`, this method takes no arguments and returns a
+# Hash where each key is a Ride. The value associated with that Ride is an Array of
+# all the Attendees that have an interest in that ride.
+# - `ticket_lottery_contestants` returns an array of attendees that do not have
+#   enough money to go on a particular ride, but are interested in that ride.
+#   The lottery winner is generated randomly based on the available contestants
+#  when `draw_lottery_winner` is called.
+# - You will need to use a **stub** to test the `announce_lottery_winner`
+# method in conjunction with the `draw_lottery_winner` method. JOY!

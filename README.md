@@ -113,7 +113,7 @@ pry(main)> jeffco_fair.recommend_rides(sally)
 
 ## Iteration 3
 
-- Use TDD to update your `Museum` class so that it responds to the following interaction pattern.
+- Use TDD to update your `Carnival` class so that it responds to the following interaction pattern.
 - For `attendees_by_ride_interest`, this method takes no arguments and returns a Hash where each key is a Ride. The value associated with that Ride is an Array of all the Attendees that have an interest in that ride.
 - `ticket_lottery_contestants` returns an array of attendees that do not have enough money to go on a particular ride, but are interested in that ride. The lottery winner is generated randomly based on the available contestants when `draw_lottery_winner` is called.
 - You will need to use a **stub** to test the `announce_lottery_winner` method in conjunction with the `draw_lottery_winner` method. JOY!
