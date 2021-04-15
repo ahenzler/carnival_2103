@@ -86,17 +86,18 @@ RSpec.describe Carnival do
       expect(jeffco_fair.attendees_by_ride_interest).to eq(expected)
     end
 
-    xit 'has ticket lottery contestants' do
+    it 'has ticket lottery contestants' do
 
-      expect(jeffco_fair.ticket_lottery_contestants(bumper_cars)).to eq()
-      expect(jeffco_fair.ticket_lottery_contestants(ferris_wheel)).to eq()
-      expect(jeffco_fair.ticket_lottery_contestants(scrambler)).to eq()
+      expect(jeffco_fair.ticket_lottery_contestants(bumper_cars)).to eq([bob, johnny])
+      expect(jeffco_fair.ticket_lottery_contestants(ferris_wheel)).to eq([])
+      expect(jeffco_fair.ticket_lottery_contestants(scrambler)).to eq([])
     end
-    xit 'has a draw lottery winner' do
 
-      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq()
-      expect(jeffco_fair.draw_lottery_winner(ferris_wheel)).to_eq(nil)
-      expect(jeffco_fair.draw_lottery_winner(scrambler)).to_eq()
+    it 'has a draw lottery winner' do
+
+      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq(bob)||(johnny)
+      expect(jeffco_fair.draw_lottery_winner(ferris_wheel)).to eq(nil)
+      expect(jeffco_fair.draw_lottery_winner(scrambler)).to eq(nil)
     end
 
     xit 'has a announce lottery winner' do
@@ -108,9 +109,6 @@ RSpec.describe Carnival do
   end
 end
 
-# - For `attendees_by_ride_interest`, this method takes no arguments and returns a
-# Hash where each key is a Ride. The value associated with that Ride is an Array of
-# all the Attendees that have an interest in that ride.
 # - `ticket_lottery_contestants` returns an array of attendees that do not have
 #   enough money to go on a particular ride, but are interested in that ride.
 #   The lottery winner is generated randomly based on the available contestants

@@ -40,5 +40,18 @@ class Carnival
     attendees_hash
   end
 
+  def ticket_lottery_contestants(ride)
+    @attendees.find_all do |attendee|
+      attendee.interests.include?(ride.name) && attendee.spending_money < ride.cost
+    end
+  end
 
+  def draw_lottery_winner(ride)
+    if ticket_lottery_contestants(ride).length > 0
+      contestants = ticket_lottery_contestants(ride).shuffle
+      contestants[0]
+    else
+      nil
+    end
+  end
 end
