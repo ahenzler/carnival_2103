@@ -23,6 +23,10 @@ RSpec.describe Carnival do
     scrambler = Ride.new({name: 'Scrambler', cost: 15})
 
     it 'can add rides' do
+      jeffco_fair.add_ride(ferris_wheel)
+      jeffco_fair.add_ride(bumper_cars)
+      jeffco_fair.add_ride(scrambler)
+
       expected = [ferris_wheel, bumper_cars, scrambler]
       expect(jeffco_fair.rides).to eq(expected)
     end
@@ -36,10 +40,14 @@ RSpec.describe Carnival do
     bob = Attendee.new('Bob', 20)
     sally = Attendee.new('Sally', 20)
 
-      it 'has' do
+      it 'has recommended rides' do
+        jeffco_fair.add_ride(ferris_wheel)
+        jeffco_fair.add_ride(bumper_cars)
+        jeffco_fair.add_ride(scrambler)
         bob.add_interest('Ferris Wheel')
         bob.add_interest('Bumper Cars')
         sally.add_interest('Scrambler')
+
         expected_b = [ferris_wheel, bumper_cars]
         expected_s = [scrambler]
         expect(jeffco_fair.recommend_rides(bob)).to eq(expected_b)
