@@ -95,19 +95,16 @@ RSpec.describe Carnival do
 
     it 'has a draw lottery winner' do
 
-      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq(bob).or eq(johnny)
+      expect(jeffco_fair.draw_lottery_winner(bumper_cars)).to eq("Bob").or eq("Johnny")
       expect(jeffco_fair.draw_lottery_winner(ferris_wheel)).to eq(nil)
       expect(jeffco_fair.draw_lottery_winner(scrambler)).to eq(nil)
     end
 
-    xit 'has a announce lottery winner' do
-
-      expect(jeffco_fair.announce_lottery_winner(bumper_cars)).to eq("has won the bumper car lottery")
+    it 'has a announce lottery winner' do
       expect(jeffco_fair.announce_lottery_winner(ferris_wheel)).to eq("No winners for this lottery")
-      expect(jeffco_fair.announce_lottery_winner(scrambler)).to eq("Bob has won the IMAX exhibit")
+      expect(jeffco_fair.announce_lottery_winner(bumper_cars)).to eq("Bob has won the Bumper Cars lottery") .or eq("Johnny has won the Bumper Cars lottery")
+      allow(jeffco_fair).to receive(:draw_lottery_winner).and_return("Bob")
+      expect(jeffco_fair.announce_lottery_winner(scrambler)).to eq("Bob has won the Scrambler lottery")
     end
   end
 end
-
-# - You will need to use a **stub** to test the `announce_lottery_winner`
-# method in conjunction with the `draw_lottery_winner` method. JOY!

@@ -49,9 +49,17 @@ class Carnival
   def draw_lottery_winner(ride)
     if ticket_lottery_contestants(ride).length > 0
       contestants = ticket_lottery_contestants(ride).shuffle
-      contestants[0]
+      contestants[0].name
     else
       nil
+    end
+  end
+
+  def announce_lottery_winner(ride)
+    if draw_lottery_winner(ride).nil?
+      "No winners for this lottery"
+    else
+      "#{draw_lottery_winner(ride)} has won the #{ride.name} lottery"
     end
   end
 end
